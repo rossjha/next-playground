@@ -23,6 +23,9 @@ export default function RootLayout({
             <li className="mr-4">
               <Link href={'/'}>Home</Link>
             </li>
+            <li className="mr-4">
+              <Link href={'/contact-us'}>Contact us</Link>
+            </li>
           </ul>
         </nav>
         {children}
