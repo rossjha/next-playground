@@ -1,4 +1,4 @@
-import { cn } from '@/app/utils/tailwindcss'
+import { cn } from '@/utils/tailwindcss'
 
 type CardProps = {
   children: React.ReactNode
