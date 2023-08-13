@@ -1,26 +1,77 @@
 'use client'
-
+import { useForm } from 'react-hook-form'
+import type { FieldValues } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { TContactFormSchema, contactFormSchema } from '@/lib/types'
 import Card from '@/components/Card'
 import { Button } from '@/components/Button'
 import ValidationMessage from '@/components/ValidationMessage'
+import { toast } from 'react-toastify'
 
 export default function ContactForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    setError,
+  } = useForm<TContactFormSchema>({
+    mode: 'onBlur',
+    resolver: zodResolver(contactFormSchema),
+  })
+
+  const onSubmit = async (data: FieldValues) => {
+    const response = await fetch('/api/contact-submission', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fullName: 1234,
+        email: 'foo',
+        body: data.body,
+      }),
+    })
+
+    const responseData = await response.json()
+
+    if (!response.ok) {
+      if (response.status === 422) {
+        toast.error('Fix validation issues')
+      } else {
+        toast.error('Submission failed')
+        return
+      }
+    }
+
+    if (responseData.errors) {
+      const errors = responseData.errors
+      for (const field of Object.keys(errors)) {
+        setError(field as keyof TContactFormSchema, {
+          type: 'server',
+          message: errors[field as keyof TContactFormSchema],
+        })
+      }
+    }
+  }
+
   return (
     <Card className="w-[500px] p-8 shadow-lg">
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h1 className="mb-6 text-2xl text-slate-700">Contact us</h1>
 
         <div className="mb-6">
-          <label htmlFor="full-name" className="mb-1 block text-slate-700">
+          <label htmlFor="fullName" className="mb-1 block text-slate-700">
             Name
           </label>
           <input
-            id="full-name"
+            id="fullName"
             type="text"
             placeholder="Full name"
             className="w-full rounded border p-2"
+            {...register('fullName')}
           />
-          <ValidationMessage>Enter your full name</ValidationMessage>
+          {errors.fullName && (
+            <ValidationMessage>{errors.fullName.message}</ValidationMessage>
+          )}
         </div>
 
         <div className="mb-6">
@@ -32,24 +83,39 @@ export default function ContactForm() {
             type="text"
             placeholder="Email address"
             className="w-full rounded border p-2"
+            {...register('email')}
           />
-          <ValidationMessage>Enter your email address</ValidationMessage>
-          <ValidationMessage>Not a valid email address</ValidationMessage>
+          {errors.email && (
+            <ValidationMessage>{errors.email.message}</ValidationMessage>
+          )}
         </div>
 
         <div className="mb-6">
-          <label htmlFor="message" className="mb-1 block text-slate-700">
+          <label htmlFor="body" className="mb-1 block text-slate-700">
             Message
           </label>
-          <textarea className="w-full rounded border p-1" rows={5}></textarea>
-          <ValidationMessage>You need to add a message</ValidationMessage>
+          <textarea
+            className="w-full rounded border p-1"
+            rows={5}
+            {...register('body')}
+          ></textarea>
+          {errors.body && (
+            <ValidationMessage>{errors.body.message}</ValidationMessage>
+          )}
         </div>
 
         <div className="flex justify-end pt-6">
-          <Button variant="outline" className="mr-3">
+          <Button
+            variant="outline"
+            className="mr-3"
+            type="button"
+            onClick={() => reset()}
+          >
             Cancel
           </Button>
-          <Button>Send</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Sending...' : 'Send'}
+          </Button>
         </div>
       </form>
     </Card>
