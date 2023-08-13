@@ -1,21 +1,39 @@
 import { NextResponse } from 'next/server'
-import { contactFormSchema } from '@/lib/types'
+import { TContactFormSchema, contactFormSchema } from '@/lib/types'
+import Ajv, { ErrorObject } from 'ajv'
+import ajvFormats from 'ajv-formats'
+import ajvErrors from 'ajv-errors'
+
+const ajv = new Ajv({ allErrors: true })
+
+ajvFormats(ajv, ['email'])
+ajvErrors(ajv)
+
+const parseErrors = (validationErrors: ErrorObject[]) => {
+  if (!validationErrors) return {}
+
+  let errors = {}
+  validationErrors.forEach((error) => {
+    const field = error.instancePath.replace('/', '')
+    errors = { ...errors, [field]: error.message }
+  })
+  return errors
+}
 
 export async function POST(req: Request) {
   const body: unknown = await req.json()
-  const result = contactFormSchema.safeParse(body)
+  const validate = ajv.compile<TContactFormSchema>(contactFormSchema)
 
-  let zodErrors = {}
-  if (!result.success) {
-    result.error.issues.forEach((issue) => {
-      zodErrors = { ...zodErrors, [issue.path[0]]: issue.message }
-    })
+  const result = validate(body)
+  let errors = {}
+
+  if (!result && validate.errors) {
+    errors = parseErrors(validate.errors)
   }
 
   const response =
-    Object.keys(zodErrors).length > 0
-      ? { errors: zodErrors }
-      : { success: true }
+    Object.keys(errors).length > 0 ? { errors } : { success: true }
+
   const status = response.success ? 200 : 422
 
   return NextResponse.json(response, { status })

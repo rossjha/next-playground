@@ -1,12 +1,13 @@
 'use client'
 import { useForm } from 'react-hook-form'
 import type { FieldValues } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { ajvResolver } from '@hookform/resolvers/ajv'
 import { TContactFormSchema, contactFormSchema } from '@/lib/types'
 import Card from '@/components/Card'
 import { Button } from '@/components/Button'
 import ValidationMessage from '@/components/ValidationMessage'
 import { toast } from 'react-toastify'
+import { fullFormats } from 'ajv-formats/dist/formats'
 
 export default function ContactForm() {
   const {
@@ -17,7 +18,7 @@ export default function ContactForm() {
     setError,
   } = useForm<TContactFormSchema>({
     mode: 'onBlur',
-    resolver: zodResolver(contactFormSchema),
+    resolver: ajvResolver(contactFormSchema, { formats: fullFormats }),
   })
 
   const onSubmit = async (data: FieldValues) => {
@@ -25,8 +26,8 @@ export default function ContactForm() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        fullName: 1234,
-        email: 'foo',
+        fullName: 'aa', // TODO temp, cause a server validation error
+        email: 'foo', // TODO temp, cause a server validation error
         body: data.body,
       }),
     })
