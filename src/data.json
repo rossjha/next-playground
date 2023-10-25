@@ -1,0 +1,157 @@
+{
+  "models": [
+    {
+      "id": "1",
+      "title": "All Equity",
+      "type": "Security"
+    },
+    {
+      "id": "2",
+      "title": "Blue Chip Equally Weighted",
+      "type": "Security"
+    },
+    {
+      "id": "3",
+      "title": "Consumer Growth",
+      "type": "Security"
+    },
+    {
+      "id": "4",
+      "title": "Consumer Staples",
+      "type": "Security"
+    },
+    {
+      "id": "5",
+      "title": "Dividend Growth",
+      "type": "Security"
+    },
+    {
+      "id": "6",
+      "title": "Equity - RF",
+      "type": "Security"
+    }
+  ],
+  "portfolios": [
+    {
+      "id": "1",
+      "title": "Sharon Smith",
+      "type": "Account"
+    },
+    {
+      "id": "2",
+      "title": "Sharon Smith IRA Account",
+      "type": "Account"
+    },
+    {
+      "id": "3",
+      "title": "AC Individual",
+      "type": "Account"
+    },
+    {
+      "id": "4",
+      "title": "Adam Smith IRA",
+      "type": "Account"
+    },
+    {
+      "id": "5",
+      "title": "Andrea IRA",
+      "type": "Account"
+    },
+    {
+      "id": "6",
+      "title": "A. Ses Individual (WR9222)",
+      "type": "Account"
+    },
+    {
+      "id": "7",
+      "title": "Balanced",
+      "type": "Account"
+    },
+    {
+      "id": "8",
+      "title": "Golile Trust",
+      "type": "Account"
+    },
+    {
+      "id": "9",
+      "title": "IRA Account - RJ",
+      "type": "Account"
+    },
+    {
+      "id": "10",
+      "title": "Paul Balanced Equity (RF-1204)",
+      "type": "Account"
+    },
+    {
+      "id": "11",
+      "title": "Raj Cliff IRA (KF9312)",
+      "type": "Account"
+    },
+    {
+      "id": "12",
+      "title": "Schwab Equity",
+      "type": "Account"
+    },
+    {
+      "id": "13",
+      "title": "US Equity - Fidelity FBS",
+      "type": "Account"
+    }
+  ],
+  "securities": [
+    {
+      "id": "1",
+      "title": "A1 CAP YM ML DR (TRY)",
+      "ticker": "A1AP.E",
+      "type": "Common stock"
+    },
+    {
+      "id": "2",
+      "title": "A2B AUST (AUD)",
+      "ticker": "A2",
+      "type": "Common stock"
+    },
+    {
+      "id": "3",
+      "title": "A2Z INFRA ENGIN (INR)",
+      "ticker": "BEA2ZIFRA",
+      "type": "Common stock"
+    },
+    {
+      "id": "4",
+      "title": "A2Z SMART TECH (USD)",
+      "ticker": "AZ",
+      "type": "Common stock"
+    },
+    {
+      "id": "5",
+      "title": "A2ZCRYPTOCAP (CAD)",
+      "ticker": "AC.P",
+      "type": "Common stock"
+    },
+    {
+      "id": "6",
+      "title": "A8 NEW MEDIA (HKD)",
+      "ticker": "80",
+      "type": "Common stock"
+    },
+    {
+      "id": "7",
+      "title": "A10 NETWORKS (USD)",
+      "ticker": "ATN",
+      "type": "Common stock"
+    },
+    {
+      "id": "8",
+      "title": "A B C INDIA (INR)",
+      "ticker": "52013",
+      "type": "Common stock"
+    },
+    {
+      "id": "9",
+      "title": "A&A MATERIAL (JPY)",
+      "ticker": "531",
+      "type": "Common stock"
+    }
+  ]
+}
