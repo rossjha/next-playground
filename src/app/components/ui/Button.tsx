@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react'
-import { cn } from '@/app/utils/tailwindcss'
+import { cn } from '@/app/lib/utils'
 import { VariantProps, cva } from 'class-variance-authority'
 
 const buttonVariants = cva(
