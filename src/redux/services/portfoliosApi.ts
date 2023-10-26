@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Portfolio } from '@/app/api/types'
 
-export const portfolioApi = createApi({
-  reducerPath: 'portfolioApi',
+export const portfoliosApi = createApi({
+  reducerPath: 'portfoliosApi',
   refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/',
@@ -24,4 +24,4 @@ export const {
   useGetPortfoliosQuery,
   useGetPortfolioByIdQuery,
   useSearchPortfoliosQuery,
-} = portfolioApi
+} = portfoliosApi

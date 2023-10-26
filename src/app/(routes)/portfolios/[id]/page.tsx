@@ -1,6 +1,6 @@
 'use client'
 
-import { useGetPortfolioByIdQuery } from '@/redux/services/portfolioApi'
+import { useGetPortfolioByIdQuery } from '@/redux/services/portfoliosApi'
 
 export default function Portfolio({ params }: { params: { id: string } }) {
   const { id } = params

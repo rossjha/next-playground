@@ -1,7 +1,7 @@
 'use client'
 
-import { useSearchPortfoliosQuery } from '@/redux/services/portfolioApi'
 import React, { useState } from 'react'
+import { useSearchPortfoliosQuery } from '@/redux/services/portfoliosApi'
 import Link from 'next/link'
 
 import { Portfolio } from '@/app/api/types'
