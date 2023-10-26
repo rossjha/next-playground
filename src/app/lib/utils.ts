@@ -8,3 +8,10 @@ export function twMerge(...args: any[]) {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+export function getInitials(str: string) {
+  return str
+    .split(' ')
+    .map((w) => w.charAt(0).toUpperCase())
+    .join('')
+}
