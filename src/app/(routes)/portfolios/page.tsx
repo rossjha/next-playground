@@ -8,40 +8,40 @@ import { getInitials } from '@/app/lib/utils'
 
 export default function Portfolios() {
   const [query, setQuery] = useState<string>('')
-  const [pinnedPortfolios, setPinnedPortfolios] = useState<Portfolio[]>([])
+  const [starredPortfolios, setStarredPortfolios] = useState<Portfolio[]>([])
   const { isLoading, isFetching, data, error } = useSearchPortfoliosQuery({
     query,
   })
+
+  useEffect(() => {
+    const starredPortfolios = getStarredPortfolios()
+    setStarredPortfolios(starredPortfolios)
+  }, [])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target?.value || ''
     setQuery(query)
   }
 
-  const getStoredPortfolios = () => {
+  const getStarredPortfolios = () => {
     const appData = localStorage.getItem('appData') || ''
     const { portfolios } = JSON.parse(appData)
     return portfolios || []
   }
 
-  useEffect(() => {
-    const pinnedPortfolios = getStoredPortfolios()
-    setPinnedPortfolios(pinnedPortfolios)
-  }, [])
-
-  const togglePortfolio = async (
+  const toggleStarredPortfolio = (
     portfolio: Portfolio,
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
-    const portfolios = await getStoredPortfolios()
+    const portfolios = getStarredPortfolios()
 
-    const portfolioIsPinned = portfolios.find(
+    const portfolioIsStarred = portfolios.find(
       (p: Portfolio) => p.id === portfolio.id,
     )
 
     let updatedPortfolios
 
-    if (portfolioIsPinned) {
+    if (portfolioIsStarred) {
       updatedPortfolios = portfolios.filter(
         (p: Portfolio) => p.id !== portfolio.id,
       )
@@ -49,15 +49,15 @@ export default function Portfolios() {
       updatedPortfolios = [portfolio, ...portfolios]
     }
 
-    setPinnedPortfolios(updatedPortfolios)
+    setStarredPortfolios(updatedPortfolios)
     localStorage.setItem(
       'appData',
       JSON.stringify({ portfolios: updatedPortfolios }),
     )
   }
 
-  const isPinned = (id: string) => {
-    return !!pinnedPortfolios.find((p: Portfolio) => p.id === id)
+  const isPortfolioStarred = (id: string) => {
+    return starredPortfolios.find((p: Portfolio) => p.id === id)
   }
 
   return (
@@ -74,14 +74,14 @@ export default function Portfolios() {
         />
       </div>
 
-      {pinnedPortfolios.length > 0 && (
+      {starredPortfolios.length > 0 && (
         <div className="mb-8 border-b">
-          <h2 className="text-1xl mb-2 font-semibold">Pinned portfolios</h2>
+          <h2 className="text-1xl mb-2 font-semibold">Starred portfolios</h2>
           <div className="mb-4">
-            {pinnedPortfolios.map((portfolio: Portfolio) => (
+            {starredPortfolios.map((portfolio: Portfolio) => (
               <div
                 className="mb-4 flex items-center"
-                key={`pinned-portfolio-${portfolio.id}`}
+                key={`starred-portfolio-${portfolio.id}`}
               >
                 <div className="mr-2 text-2xl">
                   {getInitials(portfolio.title)}
@@ -105,7 +105,7 @@ export default function Portfolios() {
                 {portfolio.title}
               </Link>
               <button
-                onClick={(evt) => togglePortfolio(portfolio, evt)}
+                onClick={(evt) => toggleStarredPortfolio(portfolio, evt)}
                 className="rounded"
               >
                 <svg
@@ -115,7 +115,7 @@ export default function Portfolios() {
                   strokeWidth={1.5}
                   stroke="currentColor"
                   className={`h-6 w-6 ${
-                    isPinned(portfolio.id)
+                    isPortfolioStarred(portfolio.id)
                       ? 'fill-yellow-500 text-yellow-500'
                       : 'text-slate-500'
                   }`}
