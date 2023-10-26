@@ -1,14 +1,24 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { portfolioApi } from './services/portfolioApi'
 import { setupListeners } from '@reduxjs/toolkit/dist/query'
+import { modelsApi } from './services/modelsApi'
+import { portfoliosApi } from './services/portfoliosApi'
+import { securitiesApi } from './services/securitiesApi'
 
 export const store = configureStore({
   reducer: {
-    [portfolioApi.reducerPath]: portfolioApi.reducer,
+    [modelsApi.reducerPath]: modelsApi.reducer,
+    [portfoliosApi.reducerPath]: portfoliosApi.reducer,
+    [securitiesApi.reducerPath]: securitiesApi.reducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([portfolioApi.middleware]),
+    getDefaultMiddleware({
+      // this removes the console errors about non-serializable values detected in state
+      serializableCheck: false,
+    })
+      .concat(modelsApi.middleware)
+      .concat(portfoliosApi.middleware)
+      .concat(securitiesApi.middleware),
 })
 
 setupListeners(store.dispatch)

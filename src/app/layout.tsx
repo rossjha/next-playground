@@ -34,7 +34,13 @@ export default function RootLayout({
               <Link href={'/'}>Home</Link>
             </li>
             <li className="mr-4">
+              <Link href={'/models'}>Models</Link>
+            </li>
+            <li className="mr-4">
               <Link href={'/portfolios'}>Portfolios</Link>
+            </li>
+            <li className="mr-4">
+              <Link href={'/securities'}>Securities</Link>
             </li>
           </ul>
         </nav>
