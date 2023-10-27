@@ -10,10 +10,14 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getInitials(str: string) {
-  return str
-    .split(' ')
-    .map((w) => w.charAt(0).toUpperCase())
-    .join('')
+  const formattedStr = str.replace(/[^a-zA-Z0-9 ]/g, '').toUpperCase()
+  const words = formattedStr.split(/\s+/)
+
+  const first = words.length > 0 ? words[0].charAt(0) : ''
+  const second = words.length > 0 ? words[1].charAt(0) : ''
+
+  return first + second
+}
 
 export function truncateStr(str: string, limit: number) {
   const ellipsis = '...'
