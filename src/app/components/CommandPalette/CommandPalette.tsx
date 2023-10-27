@@ -5,8 +5,8 @@ import Link from 'next/link'
 import { Dialog, Combobox, Transition } from '@headlessui/react'
 import { Model, Portfolio, Security } from '@/app/api/types'
 import useDebounce from '@/app/hooks/useDebounce'
-import CommandPaletteResultsProvider from '@/app/components/CommandPaletteResultsProvider'
-import CommandPaletteResultOption from '@/app/components/CommandPaletteResultOption'
+import CommandPaletteResultsProvider from '@/app/components/CommandPalette/CommandPaletteResultsProvider'
+import CommandPaletteResultOption from '@/app/components/CommandPalette/CommandPaletteResultOption'
 
 export default function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false)
