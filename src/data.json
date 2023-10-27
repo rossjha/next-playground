@@ -153,5 +153,51 @@
       "ticker": "531",
       "type": "Common stock"
     }
+  ],
+  "runs": [
+    {
+      "id": "1",
+      "title": "Run 130 on 10-23-2023",
+      "status": "Complete",
+      "releaseStatus": "Partially released",
+      "updatedAt": " Updated at 11:04 am CDT"
+    },
+    {
+      "id": "2",
+      "title": "Run 131 on 10-23-2023",
+      "status": "Complete",
+      "releaseStatus": "Released",
+      "updatedAt": " Updated at 11:14 am CDT"
+    },
+    {
+      "id": "3",
+      "title": " Run 132 on 10-23-2023",
+      "status": "Complete",
+      "releaseStatus": "Not released",
+      "updatedAt": " Updated at 12:03 am CDT"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "title": "Run 130 on 10-23-2023",
+      "status": "Complete",
+      "releaseStatus": "Partially released",
+      "updatedAt": " Updated at 11:04 am CDT"
+    },
+    {
+      "id": "2",
+      "title": "Run 131 on 10-23-2023",
+      "status": "Complete",
+      "releaseStatus": "Partially released",
+      "updatedAt": " Updated at 11:14 am CDT"
+    },
+    {
+      "id": "3",
+      "title": " Run 132 on 10-23-2023",
+      "status": "Complete",
+      "releaseStatus": "Partially released",
+      "updatedAt": " Updated at 12:03 am CDT"
+    }
   ]
 }
