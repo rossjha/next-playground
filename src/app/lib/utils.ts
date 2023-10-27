@@ -14,4 +14,13 @@ export function getInitials(str: string) {
     .split(' ')
     .map((w) => w.charAt(0).toUpperCase())
     .join('')
+
+export function truncateStr(str: string, limit: number) {
+  const ellipsis = '...'
+
+  if (str.length < limit) {
+    return str
+  }
+
+  return str.substring(0, limit - ellipsis.length) + ellipsis
 }
