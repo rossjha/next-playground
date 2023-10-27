@@ -13,6 +13,6 @@ export type Portfolio = {
 export type Security = {
   id: string
   title: string
-  ticker: string
+  ticker?: string
   type: string
 }
