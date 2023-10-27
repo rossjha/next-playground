@@ -22,10 +22,6 @@ type SearchFnMap = {
   [key: string]: ({ query }: { query: string }) => void
 }
 
-type resultsMap = {
-  [key: string]: Object
-}
-
 export default function CommandPaletteResultsProvider({
   children,
   searchTerm,
