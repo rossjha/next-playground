@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
+import CommandPalettePrototype from './components/CommandPalettePrototype'
 import CommandPalette from './components/CommandPalette'
 // import Image from 'next/image'
 import { Providers } from '@/redux/provider'
@@ -45,6 +46,7 @@ export default function RootLayout({
           </ul>
         </nav>
         <Providers>
+          <CommandPalettePrototype />
           <CommandPalette />
           {children}
         </Providers>
