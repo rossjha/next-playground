@@ -110,34 +110,34 @@ export default function CommandPalette() {
       >
         <Transition.Child
           enter="duration-300 ease-out"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
+          enterFrom="transform opacity-0"
+          enterTo="transform opacity-100"
           leave="duration-200 ease-in"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+          leaveFrom="transform opacity-100"
+          leaveTo="transform opacity-0"
         >
           <Dialog.Overlay className="fixed inset-0 bg-slate-500/50" />
         </Transition.Child>
         <Transition.Child
           enter="duration-300 ease-out"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
+          enterFrom="transform opacity-0 translate-y-2"
+          enterTo="transform opacity-100 translate-y-0"
           leave="duration-200 ease-in"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
+          leaveFrom="transform opacity-100 translate-y-0"
+          leaveTo="transform opacity-0 translate-y-2"
         >
           <Combobox
             as="div"
-            className="relative mx-auto w-[740px] divide-y divide-gray-100 overflow-hidden rounded-md bg-white shadow-xl ring-1 ring-black/5 dark:divide-slate-700 dark:bg-slate-900"
+            className="relative mx-auto w-[740px] border border-gray-300 overflow-hidden rounded-md bg-white shadow-xl ring-black/5 dark:divide-slate-700 dark:bg-slate-900"
           >
-            <div className="flex items-center px-6">
-              <svg
+            <div className="flex items-center px-6 pt-2 border-b border-b-gray-300">
+            <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="h-6 w-6 text-gray-500"
+                className="h-4 w-4 text-gray-600"
               >
                 <path
                   strokeLinecap="round"
@@ -148,8 +148,8 @@ export default function CommandPalette() {
 
               <Combobox.Input
                 onChange={handleInputChange}
-                className="h-12 w-full border-0 bg-transparent pl-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-0 dark:text-slate-200"
-                placeholder="Type a command or search e.g. /p [search] for portfolios"
+                className="h-12 w-full border-0 bg-transparent pl-2 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-0 dark:text-slate-200"
+                placeholder="Search"
                 autoComplete="off"
                 autoCorrect="off"
                 value={inputValue}
@@ -228,7 +228,7 @@ export default function CommandPalette() {
                                       onClick={(evt) =>
                                         toggleStarredPortfolio(portfolio, evt)
                                       }
-                                      className="rounded"
+                                      className="rounded pr-6"
                                     >
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -236,11 +236,13 @@ export default function CommandPalette() {
                                         viewBox="0 0 24 24"
                                         strokeWidth={1.5}
                                         stroke="currentColor"
+                                        
+
                                         className={`h-6 w-6 ${
                                           isPortfolioStarred(portfolio.id)
-                                            ? 'fill-yellow-500 text-yellow-500'
-                                            : 'text-slate-500'
-                                        }`}
+                                            ? 'fill-mauve-700 text-mauve-700 hover:fill-mauve-200'
+                                            : 'text-mauve-700 hover:fill-mauve-700'
+                                        }`}                                        
                                       >
                                         <path
                                           strokeLinecap="round"
@@ -306,11 +308,10 @@ export default function CommandPalette() {
               )}
             </CommandPaletteResultsProvider>
             {/* Footer ----------------------------------------------- */}
-            <div className="flex items-center px-6 py-4 text-sm text-gray-500 dark:text-slate-400">
-              <span className="mr-1 font-semibold">/m [search]</span> to access
-              models,{' '}
-              <span className="ml-2 mr-1 font-semibold">/s [search]</span> to
-              access securities
+            <div className="flex items-center px-6 py-4 border-t border-gray-300 text-sm text-gray-600 dark:text-slate-400">
+              <span className="mr-1 font-medium">/m [search]</span> for models,{' '}
+              <span className="ml-2 mr-1 font-medium">/p [search]</span> portfolios,{' '}
+              <span className="ml-2 mr-1 font-medium">/s [search]</span> securities
             </div>
           </Combobox>
         </Transition.Child>
