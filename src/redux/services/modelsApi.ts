@@ -3,7 +3,7 @@ import { Model } from '@/app/api/types'
 
 export const modelsApi = createApi({
   reducerPath: 'modelsApi',
-  refetchOnFocus: true,
+  refetchOnFocus: false,
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/',
   }),
@@ -14,8 +14,8 @@ export const modelsApi = createApi({
     getModelById: builder.query<Model, { id: string }>({
       query: ({ id }) => `models/${id}`,
     }),
-    searchModels: builder.query<Model[], { query: string }>({
-      query: ({ query }) => `models/?q=${query}`,
+    searchModels: builder.query<{ models: Model[] }, { query: string }>({
+      query: ({ query }) => `models/?q=${encodeURIComponent(query)}`,
     }),
   }),
 })

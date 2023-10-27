@@ -14,8 +14,11 @@ export const securitiesApi = createApi({
     getSecurityById: builder.query<Security, { id: string }>({
       query: ({ id }) => `securities/${id}`,
     }),
-    searchSecurities: builder.query<Security[], { query: string }>({
-      query: ({ query }) => `securities/?q=${query}`,
+    searchSecurities: builder.query<
+      { securities: Security[] },
+      { query: string }
+    >({
+      query: ({ query }) => `securities/?q=${encodeURIComponent(query)}`,
     }),
   }),
 })

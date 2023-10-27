@@ -12,5 +12,5 @@ export async function GET(request: Request) {
     return Response.json(filteredSecurities)
   }
 
-  return Response.json(securities)
+  return Response.json({ securities: results })
 }

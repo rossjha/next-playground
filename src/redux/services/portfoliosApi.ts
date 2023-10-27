@@ -3,7 +3,7 @@ import { Portfolio } from '@/app/api/types'
 
 export const portfoliosApi = createApi({
   reducerPath: 'portfoliosApi',
-  refetchOnFocus: true,
+  refetchOnFocus: false,
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/',
   }),
@@ -14,8 +14,11 @@ export const portfoliosApi = createApi({
     getPortfolioById: builder.query<Portfolio, { id: string }>({
       query: ({ id }) => `portfolios/${id}`,
     }),
-    searchPortfolios: builder.query<Portfolio[], { query: string }>({
-      query: ({ query }) => `portfolios/?q=${query}`,
+    searchPortfolios: builder.query<
+      { portfolios: Portfolio[] },
+      { query: string }
+    >({
+      query: ({ query }) => `portfolios/?q=${encodeURIComponent(query)}`,
     }),
   }),
 })
