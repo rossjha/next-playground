@@ -84,4 +84,12 @@ export default function CommandPaletteResultsProvider({
       hasData: !!securities.length,
     })
   }
+
+  return children({
+    data: [],
+    isError: false,
+    isLoading: false,
+    isFetching: false,
+    hasData: false,
+  })
 }
