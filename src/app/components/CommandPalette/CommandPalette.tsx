@@ -156,19 +156,17 @@ export default function CommandPalette() {
               />
             </div>
             {/* Scrollable section (actions / results) --------------------- */}
-            <section className="no-scrollbar h-max[400px] overflow-y-auto">
-              <CommandPaletteResultsProvider
-                searchType={searchType}
-                searchTerm={debouncedSearchTerm}
-              >
-                {({
-                  data: results,
-                  isError,
-                  isFetching,
-                  isLoading,
-                  hasData,
-                }) => (
-                  <>
+            <CommandPaletteResultsProvider
+              searchType={searchType}
+              searchTerm={debouncedSearchTerm}
+            >
+              {({ data: results, isError, isFetching, isLoading, hasData }) => (
+                <>
+                  <section
+                    className={`no-scrollbar overflow-y-auto ${
+                      inputValue || hasData ? 'h-max[400px]' : 'h-[400px]'
+                    }`}
+                  >
                     {/* Search results --------------------------------------- */}
                     {isError ? (
                       <div className="text-read-500">There was an error</div>
@@ -303,10 +301,10 @@ export default function CommandPalette() {
                     {!inputValue && !results.length && (
                       <CommandPalettePendingOrders />
                     )}
-                  </>
-                )}
-              </CommandPaletteResultsProvider>
-            </section>
+                  </section>
+                </>
+              )}
+            </CommandPaletteResultsProvider>
             {/* Footer ----------------------------------------------- */}
             <div className="flex items-center px-6 py-4 text-sm text-gray-500 dark:text-slate-400">
               <span className="mr-1 font-semibold">/m [search]</span> to access
