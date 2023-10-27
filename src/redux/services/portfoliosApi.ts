@@ -27,4 +27,5 @@ export const {
   useGetPortfoliosQuery,
   useGetPortfolioByIdQuery,
   useSearchPortfoliosQuery,
+  useLazySearchPortfoliosQuery,
 } = portfoliosApi

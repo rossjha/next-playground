@@ -20,5 +20,9 @@ export const modelsApi = createApi({
   }),
 })
 
-export const { useGetModelsQuery, useGetModelByIdQuery, useSearchModelsQuery } =
-  modelsApi
+export const {
+  useGetModelsQuery,
+  useGetModelByIdQuery,
+  useSearchModelsQuery,
+  useLazySearchModelsQuery,
+} = modelsApi

@@ -27,4 +27,5 @@ export const {
   useGetSecuritiesQuery,
   useGetSecurityByIdQuery,
   useSearchSecuritiesQuery,
+  useLazySearchSecuritiesQuery,
 } = securitiesApi
