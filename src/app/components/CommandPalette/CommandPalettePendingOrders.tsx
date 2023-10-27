@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useGetOrdersQuery } from '@/redux/services/ordersApi'
 
 export default function CommandPalettePendingOrders() {
+  // @ts-ignore
   const { isLoading, isFetching, data, error } = useGetOrdersQuery()
 
   const orders = data?.orders ?? []

@@ -3,6 +3,7 @@ import { Run } from '@/app/api/types'
 import { useGetRunsQuery } from '@/redux/services/runsApi'
 
 export default function CommandPalettePendingOrders() {
+  // @ts-ignore
   const { isLoading, isFetching, data, error } = useGetRunsQuery()
 
   const runs = data?.runs ?? []
