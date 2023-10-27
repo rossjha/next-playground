@@ -238,9 +238,9 @@ export default function CommandPalette() {
 
   const { type, value } = query
 
-  const filteredResults = value
-    ? data[type].filter((item) => item.title.toLowerCase().includes(value))
-    : []
+  const filteredResults = value && data[type]
+  ? data[type].filter((item) => item.title && typeof item.title === 'string' && item.title.toLowerCase().includes(value))
+  : []
 
   const handleInputChange = (event: any) => {
     const str = event.target?.value
@@ -281,38 +281,39 @@ export default function CommandPalette() {
       >
         <Transition.Child
           enter="duration-300 ease-out"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
+          enterFrom="transform opacity-0"
+          enterTo="transform opacity-100"
           leave="duration-200 ease-in"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+          leaveFrom="transform opacity-100"
+          leaveTo="transform opacity-0"
         >
           <Dialog.Overlay className="fixed inset-0 bg-slate-500/50" />
         </Transition.Child>
         <Transition.Child
           enter="duration-300 ease-out"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
+          enterFrom="transform opacity-0 translate-y-2"
+          enterTo="transform opacity-100 translate-y-0"
           leave="duration-200 ease-in"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
+          leaveFrom="transform opacity-100 translate-y-0"
+          leaveTo="transform opacity-0 translate-y-2"
         >
+
           <Combobox
             onChange={(model: Model) => {
               setIsOpen(false)
               router.push(`/models/${model.id}`)
             }}
             as="div"
-            className="relative mx-auto w-[740px] divide-y divide-gray-100 overflow-hidden rounded-md bg-white shadow-xl ring-1 ring-black/5 dark:divide-slate-700 dark:bg-slate-900"
+            className="relative mx-auto w-[740px] border border-gray-300 overflow-hidden rounded-md bg-white shadow-xl ring-black/5 dark:divide-slate-700 dark:bg-slate-900"
           >
-            <div className="flex items-center px-6">
+            <div className="flex items-center px-6 pt-2 border-b border-b-gray-300 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="h-6 w-6 text-gray-500"
+                className="h-4 w-4 text-gray-600"
               >
                 <path
                   strokeLinecap="round"
@@ -323,12 +324,13 @@ export default function CommandPalette() {
 
               <Combobox.Input
                 onChange={handleInputChange}
-                className="h-12 w-full border-0 bg-transparent pl-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-0 dark:text-slate-200"
-                placeholder="Type a command or search e.g. /p [search] for portfolios"
+                className="h-12 w-full border-0 bg-transparent pl-2 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-0 dark:text-slate-200"
+                placeholder="Search"
                 autoComplete="off"
                 autoCorrect="off"
               />
             </div>
+
             {filteredResults.length > 0 && (
               <Combobox.Options
                 static
@@ -338,14 +340,14 @@ export default function CommandPalette() {
                   <Combobox.Option key={item.id} value={item}>
                     {({ active }) => (
                       <div
-                        className={`cursor-pointer space-x-1 px-6 py-2 transition-colors ${
-                          active ? 'bg-teal-900' : 'bg-white dark:bg-slate-900'
+                        className={`mx-6 px-2 text-gray-800 flex py-3 text-sm dark:border-b-gray-500 cursor-pointer rounded-md ${
+                          active ? 'bg-forest-100' : 'bg-white dark:bg-slate-900'
                         }`}
                       >
                         <span
                           className={`mr-1 font-medium ${
                             active
-                              ? 'text-white'
+                              ? 'text-gray-800'
                               : 'text-gray-900 dark:text-slate-200'
                           }`}
                         >
@@ -373,10 +375,10 @@ export default function CommandPalette() {
             {filteredResults.length === 0 && (
               <div className="py-6">
                 <div className="flex justify-between px-6">
-                  <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">
+                  <h2 className="mb-4 text-xs font-normal uppercase tracking-wider text-gray-800 dark:text-slate-300">
                     Pinned portfolios
                   </h2>
-                  <div>
+                  {/* <div>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -391,58 +393,58 @@ export default function CommandPalette() {
                         d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
                       />
                     </svg>
-                  </div>
+                  </div> */}
                 </div>
                 <ul className="no-scrollbar flex overflow-x-auto px-6">
-                  <li className="mr-2 flex">
-                    <div className="mr-3 flex h-14 w-14 items-center justify-center rounded border border-gray-200 bg-gray-100 text-xl font-semibold dark:border-slate-400 dark:bg-slate-500">
+                  <li className="py-2 mr-2 flex focus:ring-2 ring-forest-100 hover:bg-forest-100 rounded cursor-pointer">
+                    <div className="mr-3 flex h-14 w-14 items-center justify-center text-xl text-gray-700 font-semibold dark:border-slate-400 dark:bg-slate-500">
                       GT
                     </div>
                     <div>
-                      <div className="line-clamp-2 inline-block justify-center rounded bg-red-100 px-1 py-[1px] text-[0.7rem] font-semibold uppercase leading-tight text-red-800">
+                      <div className="line-clamp-2 inline-block justify-center bg-gray-200 px-2 py-1 text-[0.7rem] font-normal uppercase leading-tight text-gray-800">
                         Account
                       </div>
-                      <div className="w-[150px] dark:text-slate-200">
+                      <div className="w-[150px] dark:text-slate-200 text-gray-700">
                         Galilei Trust
                       </div>
                     </div>
                   </li>
-                  <li className="mr-2 flex">
-                    <div className="mr-3 flex h-14 w-14 items-center justify-center rounded border border-gray-200 bg-gray-100 text-xl font-semibold dark:border-slate-400 dark:bg-slate-500">
+                  <li className="py-2 mr-2 flex focus:ring-2 ring-forest-100 hover:bg-forest-100 rounded cursor-pointer">
+                    <div className="mr-3 flex h-14 w-14 items-center justify-center text-xl text-gray-700 font-semibold dark:border-slate-400 dark:bg-slate-500">
                       BF
                     </div>
                     <div>
-                      <div className="line-clamp-2 inline-block justify-center rounded bg-red-100 px-1 py-[1px] text-[0.7rem] font-semibold uppercase leading-tight text-red-800">
-                        HOUSEHOLD
+                      <div className="line-clamp-2 inline-block justify-center rounded bg-gray-200 px-2 py-1 text-[0.7rem] font-normal uppercase leading-tight text-gray-800">
+                        Household
                       </div>
-                      <div className="w-[150px] dark:text-slate-200">
+                      <div className="w-[150px] dark:text-slate-200 text-gray-700">
                         Baker Family
                       </div>
                     </div>
                   </li>
-                  <li className="mr-2 flex">
-                    <div className="mr-3 flex h-14 w-14 items-center justify-center rounded border border-gray-200 bg-gray-100 text-xl font-semibold dark:border-slate-400 dark:bg-slate-500">
+                  <li className="py-2 mr-2 flex focus:ring-2 ring-forest-100 hover:bg-forest-100 rounded cursor-pointer">
+                    <div className="mr-3 flex h-14 w-14 items-center justify-center text-xl text-gray-700 font-semibold dark:border-slate-400 dark:bg-slate-500">
                       AT
                     </div>
                     <div>
-                      <div className="inline-block justify-center rounded bg-red-100 px-1 py-[1px] text-[0.7rem] font-semibold uppercase leading-tight text-red-800">
+                      <div className="line-clamp-2 inline-block justify-center rounded bg-gray-200 px-2 py-1 text-[0.7rem] font-normal uppercase leading-tight text-gray-800">
                         Account
                       </div>
-                      <div className="w-[150px] dark:text-slate-200">
+                      <div className="w-[150px] dark:text-slate-200 text-gray-700">
                         Akkerlof Trust
                       </div>
                     </div>
                   </li>
-                  <li>
+                  <li className="py-2 mr-2 flex focus:ring-2 ring-forest-100 hover:bg-forest-100 rounded cursor-pointer">
                     <Link href="" className="flex">
-                      <div className="mr-3 flex h-14 w-14 items-center justify-center rounded border border-gray-200 bg-gray-100 text-xl font-semibold dark:border-slate-400 dark:bg-slate-500">
+                      <div className="mr-3 flex h-14 w-14 items-center justify-center text-xl text-gray-700 font-semibold dark:border-slate-400 dark:bg-slate-500">
                         AS
                       </div>
                       <div>
-                        <div className="line-clamp-2 inline-block justify-center rounded bg-red-100 px-1 py-[1px] text-[0.7rem] font-semibold uppercase leading-tight text-red-800">
+                        <div className="line-clamp-2 inline-block justify-center rounded bg-gray-200 px-2 py-1 text-[0.7rem] font-normal uppercase leading-tight text-gray-800">
                           Account
                         </div>
-                        <div className="w-[150px] dark:text-slate-200">
+                        <div className="w-[150px] dark:text-slate-200 text-gray-700">
                           Ask Trust
                         </div>
                       </div>
@@ -453,12 +455,12 @@ export default function CommandPalette() {
             )}
 
             {filteredResults.length !== 0 && (
-              <div className="py-6">
-                <h2 className="mb-4 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Jump to
-                </h2>
+              <div className="py-6 px-6 border-t border-t-gray-400">
+                 <h2 className="mb-4 text-xs font-normal uppercase tracking-wider text-gray-800 dark:text-slate-300">
+                    Jump to
+                  </h2>
 
-                <ul className="px-6">
+                <ul>
                   <li className="mb-2 text-sm dark:text-slate-300">
                     <Link href="">Models</Link>
                   </li>
@@ -475,138 +477,120 @@ export default function CommandPalette() {
             {filteredResults.length === 0 && (
               <section className="no-scrollbar h-[260px] overflow-y-auto">
                 <div className="py-6">
-                  <h2 className="mb-2 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">
+                   <h2 className="mb-4 px-6 text-xs font-normal uppercase tracking-wider text-gray-800 dark:text-slate-300">
                     Today's latest runs
                   </h2>
 
-                  <ul className="px-6">
-                    <li className="flex border-b py-3 text-sm dark:border-b-slate-500">
+                  <ul className="px-4">
+                    <li className="px-2 flex border-b border-b-gray-100 py-3 text-sm dark:border-b-gray-500 hover:bg-forest-100 cursor-pointer rounded-t-md">
                       <Link
                         href=""
-                        className="mr-3 font-medium text-teal-700 dark:text-teal-500"
+                        className="mr-3 text-forest-green dark:text-teal-500"
                       >
                         Run 130 on 10-23-2023
                       </Link>
-                      <div className="mr-3 flex items-center justify-center rounded bg-green-100 px-2 text-[0.7rem] font-semibold uppercase text-green-800">
+                      <div className="mr-3 flex items-center justify-center rounded bg-forest-100 px-2 text-[0.7rem] font-medium uppercase text-forest-green">
                         Complete
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
                         Partially released
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
                         Updated at 11:04 am CDT
-                      </div>
-                      <div className="text-medium text-teal-700 dark:text-teal-500">
-                        Release
                       </div>
                     </li>
-                    <li className="flex border-b py-3 text-sm dark:border-b-slate-500">
+                    <li className="px-2 flex border-b border-b-gray-100 py-3 text-sm dark:border-b-gray-500 hover:bg-forest-100 cursor-pointer">
                       <Link
                         href=""
-                        className="mr-3 font-medium text-teal-700 dark:text-teal-500"
+                        className="mr-3 text-forest-green dark:text-teal-500"
                       >
                         Run 130 on 10-23-2023
                       </Link>
-                      <div className="mr-3 flex items-center justify-center rounded bg-green-100 px-2 text-[0.7rem] font-semibold uppercase text-green-800">
+                      <div className="mr-3 flex items-center justify-center rounded bg-forest-100 px-2 text-[0.7rem] font-medium uppercase text-forest-green">
                         Complete
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
-                        Partially released
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
+                        Released
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
                         Updated at 11:04 am CDT
-                      </div>
-                      <div className="text-medium text-teal-700 dark:text-teal-500">
-                        Release
                       </div>
                     </li>
-                    <li className="flex border-b py-3 text-sm dark:border-b-slate-500">
+                    <li className="px-2 flex py-3 text-sm dark:border-b-gray-500 hover:bg-forest-100 cursor-pointer rounded-b-md">
                       <Link
                         href=""
-                        className="mr-3 font-medium text-teal-700 dark:text-teal-500"
+                        className="mr-3 text-forest-green dark:text-teal-500"
                       >
                         Run 130 on 10-23-2023
                       </Link>
-                      <div className="mr-3 flex items-center justify-center rounded bg-green-100 px-2 text-[0.7rem] font-semibold uppercase text-green-800">
+                      <div className="mr-3 flex items-center justify-center rounded bg-forest-100 px-2 text-[0.7rem] font-medium uppercase text-forest-green">
                         Complete
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
-                        Partially released
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
+                        Not released
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
                         Updated at 11:04 am CDT
-                      </div>
-                      <div className="text-medium text-teal-700 dark:text-teal-500">
-                        Release
                       </div>
                     </li>
                   </ul>
                 </div>
 
                 <div className="py-6">
-                  <h2 className="mb-2 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">
+                  <h2 className="mb-4 px-6 text-xs font-normal uppercase tracking-wider text-gray-800 dark:text-slate-300">
                     Pending orders
                   </h2>
 
-                  <ul className="px-6">
-                    <li className="flex border-b py-3 text-sm dark:border-b-slate-500">
+                  <ul className="px-4">
+                    <li className="px-2 flex border-b border-b-gray-100 py-3 text-sm dark:border-b-gray-500 hover:bg-forest-100 cursor-pointer rounded-t-md">
                       <Link
                         href=""
-                        className="mr-3 font-medium text-teal-700 dark:text-teal-500"
+                        className="mr-3 text-forest-green dark:text-teal-500"
                       >
                         Run 130 on 10-23-2023
                       </Link>
-                      <div className="mr-3 flex items-center justify-center rounded bg-green-100 px-1 text-[0.7rem] font-semibold uppercase text-green-800">
+                      <div className="mr-3 flex items-center justify-center rounded bg-forest-100 px-2 text-[0.7rem] font-medium uppercase text-forest-green">
                         Complete
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
                         Partially released
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
                         Updated at 11:04 am CDT
-                      </div>
-                      <div className="text-medium text-teal-700 dark:text-teal-500">
-                        Release
                       </div>
                     </li>
-                    <li className="flex border-b py-3 text-sm dark:border-b-slate-500">
+                    <li className="px-2 flex border-b border-b-gray-100 py-3 text-sm dark:border-b-gray-500 hover:bg-forest-100 cursor-pointer">
                       <Link
                         href=""
-                        className="mr-3 font-medium text-teal-700 dark:text-teal-500"
+                        className="mr-3 text-forest-green dark:text-teal-500"
                       >
                         Run 130 on 10-23-2023
                       </Link>
-                      <div className="mr-3 flex items-center justify-center rounded bg-green-100 px-1 text-[0.7rem] font-semibold uppercase text-green-800">
+                      <div className="mr-3 flex items-center justify-center rounded bg-forest-100 px-2 text-[0.7rem] font-medium uppercase text-forest-green">
                         Complete
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
-                        Partially released
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
+                        Released
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
                         Updated at 11:04 am CDT
-                      </div>
-                      <div className="text-medium text-teal-700 dark:text-teal-500">
-                        Release
                       </div>
                     </li>
-                    <li className="flex border-b py-3 text-sm dark:border-b-slate-500">
+                    <li className="px-2 flex py-3 text-sm dark:border-b-gray-500 hover:bg-forest-100 cursor-pointer rounded-b-md">
                       <Link
                         href=""
-                        className="mr-3 font-medium text-teal-700 dark:text-teal-500"
+                        className="mr-3 text-forest-green dark:text-teal-500"
                       >
                         Run 130 on 10-23-2023
                       </Link>
-                      <div className="mr-3 flex items-center justify-center rounded bg-green-100 px-1 text-[0.7rem] font-semibold uppercase text-green-800">
+                      <div className="mr-3 flex items-center justify-center rounded bg-forest-100 px-2 text-[0.7rem] font-medium uppercase text-forest-green">
                         Complete
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
-                        Partially released
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
+                        Not released
                       </div>
-                      <div className="mr-6 dark:text-slate-200">
+                      <div className="mr-6 dark:text-slate-200 text-gray-700">
                         Updated at 11:04 am CDT
-                      </div>
-                      <div className="text-medium text-teal-700 dark:text-teal-500">
-                        Release
                       </div>
                     </li>
                   </ul>
@@ -614,8 +598,8 @@ export default function CommandPalette() {
               </section>
             )}
 
-            <div className="flex items-center px-6 py-4 text-sm text-gray-500 dark:text-slate-400">
-              <svg
+            <div className="flex items-center px-6 py-4 border-t border-gray-300 text-sm text-gray-600 dark:text-slate-400">
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -628,10 +612,10 @@ export default function CommandPalette() {
                   strokeLinejoin="round"
                   d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
                 />
-              </svg>
-              <span className="mr-1 font-semibold">/m [search]</span> to access
+              </svg> */}
+              <span className="mr-1 font-medium ">/m [search]</span> to access
               models,{' '}
-              <span className="ml-2 mr-1 font-semibold">/s [search]</span> to
+              <span className="ml-2 mr-1 font-medium">/s [search]</span> to
               access securities
             </div>
           </Combobox>
